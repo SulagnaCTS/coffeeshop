@@ -33,3 +33,20 @@ document.addEventListener("DOMContentLoaded", function() {
         displayCart();
     }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const loginForm = document.getElementById("loginForm");
+
+    if (loginForm) {
+        loginForm.addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent form submission
+
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+
+            console.log("Email:", email);
+            console.log("Password:", password);
+        });
+    }
+});
+
