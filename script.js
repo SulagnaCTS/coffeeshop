@@ -49,4 +49,10 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+gtag('event', 'contactform_event', {
+    username: name,
+    useremail: email,
+    userpassword: password,
+    submission_count: 1
+})
 
