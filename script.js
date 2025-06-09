@@ -28,10 +28,31 @@ function checkout() {
     displayCart();
 }
 
+// Function to get total cart item count
+function getCartItemCount() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    return cart.reduce((total, item) => total + item.quantity, 0);
+}
+
+// Function to track page views
+function trackPageView() {
+    gtag('event', 'page_view', {
+        page_title: document.title,
+        page_location: window.location.href,
+        page_path: window.location.pathname,
+        user_id: localStorage.getItem("user_id") || "guest",
+        referral_source: document.referrer || "Direct",
+        session_duration: performance.now() // Time since page load
+    });
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     if (document.getElementById("cart-items")) {
         displayCart();
     }
+
+    // Track page view when the page loads
+    trackPageView();
 
     let form = document.getElementById("contact-form"); // Ensure your form has this ID
     if (form) {
@@ -55,3 +76,4 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
+
