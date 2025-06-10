@@ -16,11 +16,11 @@ function displayCart() {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     let cartItems = document.getElementById("cart-items");
 
-    cartItems.innerHTML = "";
-    cart.forEach(item => {
-        cartItems.innerHTML += `<p>${item.name} x ${item.quantity} - $${item.price * item.quantity}</p>`;
-    });
+    cartItems.innerHTML = cart.map(item => 
+        `<p>${item.name} x ${item.quantity} - $${item.price * item.quantity}</p>`
+    ).join("");
 }
+
 
 
 function checkout() {
