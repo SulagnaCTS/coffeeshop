@@ -23,10 +23,21 @@ function displayCart() {
 }
 
 function checkout() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let totalRevenue = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    let totalItems = getCartItemCount();
+
+    gtag('event', 'purchase', {
+        value: totalRevenue,  // Total revenue
+        currency: "USD",
+        cartcount: totalItems // Total items in cart
+    });
+
     alert("Thank you for your purchase!");
     localStorage.removeItem("cart");
     displayCart();
 }
+
 
 // Function to get total cart item count
 function getCartItemCount() {
@@ -64,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function() {
             let password = document.getElementById("password")?.value || "Unknown";
             let count = getCartItemCount(); // Get cart item count
 
-            gtag('event', 'contactform_event', {
+            gtag('event', 'contact_form_submission', {
                 username: name,
                 useremail: email,
                 userpassword: password,
