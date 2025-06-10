@@ -22,7 +22,6 @@ function displayCart() {
     });
 }
 
-gtag('config', 'G-WB6MBFPYSC', { debug_mode: true });
 
 function checkout() {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -89,4 +88,4 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
-
+gtag('config', 'G-WB6MBFPYSC', { debug_mode: true });
