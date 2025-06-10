@@ -16,12 +16,15 @@ function displayCart() {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     let cartItems = document.getElementById("cart-items");
 
+    if (!cartItems) {
+        console.error("Cart items element not found!");
+        return;
+    }
+
     cartItems.innerHTML = cart.map(item => 
         `<p>${item.name} x ${item.quantity} - $${item.price * item.quantity}</p>`
     ).join("");
 }
-
-
 
 function checkout() {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
