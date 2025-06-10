@@ -39,8 +39,14 @@ function checkout() {
 
     alert("Thank you for your purchase!");
     localStorage.removeItem("cart");
-    displayCart();
+
+    // Explicitly update the UI to reflect an empty cart
+    let cartItems = document.getElementById("cart-items");
+    if (cartItems) {
+        cartItems.innerHTML = "<p>Your cart is empty.</p>";
+    }
 }
+
 
 
 // Function to get total cart item count
