@@ -22,6 +22,8 @@ function displayCart() {
     });
 }
 
+gtag('config', 'G-WB6MBFPYSC', { debug_mode: true });
+
 function checkout() {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     let totalRevenue = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
