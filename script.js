@@ -21,16 +21,23 @@ function displayCart() {
         return;
     }
 
-    cartItems.innerHTML = cart.map(item => 
-        `<p>${item.name} x ${item.quantity} - $${item.price * item.quantity}</p>`
-    ).join("");
+    // **Step 4: Show "Your cart is empty" when there are no items**
+    if (cart.length === 0) {
+        cartItems.innerHTML = "<p>Your cart is empty.</p>";
+    } else {
+        cartItems.innerHTML = cart.map(item => 
+            `<p>${item.name} x ${item.quantity} - $${item.price * item.quantity}</p>`
+        ).join("");
+    }
 }
+
 
 function checkout() {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     let totalRevenue = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
     let totalItems = getCartItemCount();
 
+    // Track purchase event
     gtag('event', 'purchase', {
         value: totalRevenue,  // Total revenue
         currency: "USD",
@@ -38,9 +45,11 @@ function checkout() {
     });
 
     alert("Thank you for your purchase!");
+
+    // **Step 2: Clear the cart from localStorage**
     localStorage.removeItem("cart");
 
-    // Call displayCart() to update the UI
+    // **Step 3: Update the cart display**
     displayCart();
 }
 
