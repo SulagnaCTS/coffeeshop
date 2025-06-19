@@ -13,20 +13,24 @@ function addToCart(productName, price) {
 }
 
 
-
-function displayCart() {
+function checkout() {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    let cartItems = document.getElementById("cart-items");
+    let totalRevenue = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    let totalItems = getCartItemCount();
 
-    if (!cartItems) {
-        console.error("Cart items element not found!");
-        return;
-    }
+    gtag('event', 'purchase', {
+        value: totalRevenue,  // Total revenue
+        currency: "USD",
+        cartcount: totalItems // Total items in cart
+    });
 
-    cartItems.innerHTML = cart.map(item => 
-        `<p>${item.name} x ${item.quantity} - $${item.price * item.quantity}</p>`
-    ).join("");
+    alert("Thank you for your purchase!");
+    localStorage.removeItem("cart");
+
+    // Call displayCart() to update the UI
+    displayCart();
 }
+
 function displayCart() {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     let cartItems = document.getElementById("cart-items");
