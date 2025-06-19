@@ -15,20 +15,27 @@ function addToCart(productName, price) {
 
 function checkout() {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    if (cart.length === 0) {
+        alert("Your cart is already empty.");
+        return;
+    }
+
     let totalRevenue = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
     let totalItems = getCartItemCount();
 
     gtag('event', 'purchase', {
-        value: totalRevenue,  // Total revenue
+        value: totalRevenue,
         currency: "USD",
-        cartcount: totalItems // Total items in cart
+        cartcount: totalItems
     });
 
-    alert("Thank you for your purchase!");
     localStorage.removeItem("cart");
-
-    // Call displayCart() to update the UI
     displayCart();
+
+    // Show confirmation message
+    let confirmation = document.getElementById("confirmation-message");
+    confirmation.innerHTML = `<h2>Thank you for your purchase!</h2><p>You bought ${totalItems} items for $${totalRevenue}.</p>`;
+    confirmation.style.display = "block";
 }
 
 function displayCart() {
