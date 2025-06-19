@@ -27,25 +27,23 @@ function displayCart() {
         `<p>${item.name} x ${item.quantity} - $${item.price * item.quantity}</p>`
     ).join("");
 }
-function checkout() {
+function displayCart() {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    let totalRevenue = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    let totalItems = getCartItemCount();
+    let cartItems = document.getElementById("cart-items");
 
-    gtag('event', 'purchase', {
-        value: totalRevenue,  // Total revenue
-        currency: "USD",
-        cartcount: totalItems // Total items in cart
-    });
+    if (!cartItems) {
+        console.error("Cart items element not found!");
+        return;
+    }
 
-    alert("Thank you for your purchase!");
-    localStorage.removeItem("cart");
-
-    // Call displayCart() to update the UI
-    displayCart();
+    if (cart.length === 0) {
+        cartItems.innerHTML = "<p>Your cart is empty.</p>";
+    } else {
+        cartItems.innerHTML = cart.map(item => 
+            `<p>${item.name} x ${item.quantity} - $${item.price * item.quantity}</p>`
+        ).join("");
+    }
 }
-
-
 
 // Function to get total cart item count
 function getCartItemCount() {
